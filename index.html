@@ -2,8 +2,53 @@
 layout: home
 # Index page
 ---
-<audio id="site-audio" controls preload="none" style="width:100%;max-width:360px;">
-	<source src="assets/audio/ICARUS.mp3" type="audio/mpeg">
+<audio id="site-audio" controls preload="none" playsinline style="width:100%;max-width:360px;">
+	<source src="assets/audio/ICARUS.mp3?v={{ site.time | date: '%s' }}" type="audio/mpeg">
 	Your browser does not support the audio element.
 </audio>
+
+<p><button id="play-audio" type="button">Play ICARUS</button></p>
+
+<p><a href="assets/audio/ICARUS.mp3">Direct link to ICARUS.mp3</a></p>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	var a = document.getElementById('site-audio');
+	var btn = document.getElementById('play-audio');
+	if (!a) return;
+	try {
+		a.muted = false;
+		a.volume = 1.0;
+	} catch (e) {}
+
+	function log(msg) { try { console.log('[audio]', msg); } catch (_) {} }
+
+	a.addEventListener('canplaythrough', function () { log('canplaythrough, duration=' + a.duration); });
+	a.addEventListener('play', function () { log('play'); });
+	a.addEventListener('pause', function () { log('pause'); });
+	a.addEventListener('stalled', function () { log('stalled'); });
+	a.addEventListener('waiting', function () { log('waiting'); });
+	a.addEventListener('error', function () {
+		log('error ' + (a.error ? a.error.code : 'unknown'));
+		var msg = document.createElement('div');
+		msg.textContent = 'Audio failed to load. Use the direct link above to test.';
+		msg.style.marginTop = '0.5rem';
+		msg.style.color = '#d33';
+		a.insertAdjacentElement('afterend', msg);
+	});
+
+	if (btn) {
+		btn.addEventListener('click', function () {
+			try {
+				// Ensure fresh load (helps if PWA cached older assets)
+				a.load();
+				var p = a.play();
+				if (p && typeof p.then === 'function') {
+					p.then(function(){ log('play() resolved'); }).catch(function(err){ log('play() rejected: ' + err); });
+				}
+			} catch (err) { log('exception: ' + err); }
+		});
+	}
+});
+</script>
 
