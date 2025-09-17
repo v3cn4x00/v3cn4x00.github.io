@@ -1,0 +1,21 @@
+---
+layout: none
+---
+{% include head.html %}
+<body>
+  {% include header.html %}
+  {{ content }}
+  {% include footer.html %}
+
+  <audio id="bg-music" loop>
+    <source src="{{ '/assets/audio/ICARUS.mp3' | relative_url }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <button id="playMusic" style="position: fixed; bottom: 1rem; right: 1rem;">▶ Play Music</button>
+
+  <script>
+    document.getElementById('playMusic').addEventListener('click', () => {
+      document.getElementById('bg-music').play();
+    });
+  </script>
+</body>
