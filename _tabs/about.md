@@ -1,3 +1,11 @@
+---
+# the default layout is 'page'
+icon: fas fa-info-circle
+order: 4
+---
+
+
+
 I’m a certified Penetration Tester (PNPT) who loves getting under the hood of networks, breaking things ethically, and building them back stronger. My work is all about finding the cracks before the bad guys do — and turning vulnerabilities into lessons, not liabilities.
 
 Over the years, I’ve gained hands-on experience in ethical hacking, Active Directory exploitation, OSINT, and network enumeration, working with real-world environments that don’t follow the script. Every test, every exploit, every fix teaches me something new about how systems — and people — interact with security.
